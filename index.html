@@ -18,7 +18,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-
 .ppn-chart-card {
   max-width: 1100px;
   margin: 40px auto;
@@ -68,7 +67,6 @@
 }
 
 @media (max-width: 768px) {
-
   .ppn-chart-header {
     padding: 24px 16px;
   }
@@ -85,13 +83,10 @@
     height: 500px;
     padding: 20px 10px 0;
   }
-
 }
-
 </style>
 
 <script>
-
 const labels = [
   1975,1977,1979,1981,1983,
   1985,1987,1989,1991,1993,
@@ -102,11 +97,9 @@ const labels = [
 ];
 
 const data = {
-
   labels: labels,
 
   datasets: [
-
     {
       label: 'Nucléaire',
       data: [
@@ -125,7 +118,6 @@ const data = {
       pointRadius: 0,
       borderWidth: 2
     },
-
     {
       label: 'Hydraulique',
       data: [
@@ -144,7 +136,6 @@ const data = {
       pointRadius: 0,
       borderWidth: 2
     },
-
     {
       label: 'Thermique fossile',
       data: [
@@ -163,7 +154,6 @@ const data = {
       pointRadius: 0,
       borderWidth: 2
     },
-
     {
       label: 'Éolien',
       data: [
@@ -182,7 +172,6 @@ const data = {
       pointRadius: 0,
       borderWidth: 2
     },
-
     {
       label: 'Solaire',
       data: [
@@ -201,7 +190,6 @@ const data = {
       pointRadius: 0,
       borderWidth: 2
     },
-
     {
       label: 'Bioénergies',
       data: [
@@ -220,19 +208,15 @@ const data = {
       pointRadius: 0,
       borderWidth: 2
     }
-
   ]
 };
 
-new Chart(
+const chart = new Chart(
   document.getElementById('mix50ansFrance'),
   {
     type: 'line',
-
     data: data,
-
     options: {
-
       responsive: true,
       maintainAspectRatio: false,
 
@@ -242,10 +226,8 @@ new Chart(
       },
 
       plugins: {
-
         legend: {
           position: 'bottom',
-
           labels: {
             color: '#212430',
             padding: 20,
@@ -253,7 +235,6 @@ new Chart(
             boxHeight: 14,
             usePointStyle: true,
             pointStyle: 'circle',
-
             font: {
               size: 13,
               weight: '600'
@@ -262,13 +243,11 @@ new Chart(
         },
 
         tooltip: {
-
           backgroundColor: '#212430',
           titleColor: '#ffffff',
           bodyColor: '#ffffff',
           padding: 14,
           cornerRadius: 12,
-
           callbacks: {
             label: function(context) {
               return context.dataset.label + ' : ' + context.parsed.y + ' TWh';
@@ -278,49 +257,38 @@ new Chart(
       },
 
       scales: {
-
         x: {
-
           stacked: true,
-
           ticks: {
             color: '#212430',
             maxTicksLimit: 12,
-
             font: {
               size: 12
             }
           },
-
           grid: {
             display: false
           }
         },
 
         y: {
-
           stacked: true,
           beginAtZero: true,
-
           title: {
             display: true,
             text: 'Production électrique (TWh)',
             color: '#212430',
-
             font: {
               size: 14,
               weight: '700'
             }
           },
-
           ticks: {
             color: '#212430',
-
             callback: function(value) {
               return value + ' TWh';
             }
           },
-
           grid: {
             color: 'rgba(191,200,226,0.35)'
           }
@@ -329,17 +297,21 @@ new Chart(
     }
   }
 );
-/* MODIFICATION : Fonction de communication de la hauteur */
-        function sendHeightToParent() {
-            setTimeout(() => {
-                const container = document.getElementById('typeform-container');
-                if(container) {
-                    const height = container.offsetHeight;
-                    window.parent.postMessage({ type: 'resize', height: height + 20 }, '*');
-                }
-            }, 50);
-        }
-        window.addEventListener('load', sendHeightToParent);
-        mettreAJourBoutonsSuivant();
-  
+
+function sendHeightToParent() {
+  setTimeout(function() {
+    const height = document.body.scrollHeight;
+
+    window.parent.postMessage({
+      type: 'resize',
+      height: height + 20
+    }, '*');
+  }, 100);
+}
+
+window.addEventListener('load', sendHeightToParent);
+window.addEventListener('resize', sendHeightToParent);
+
+setTimeout(sendHeightToParent, 500);
+setTimeout(sendHeightToParent, 1000);
 </script>
