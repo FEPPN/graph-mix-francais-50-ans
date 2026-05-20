@@ -329,5 +329,17 @@ new Chart(
     }
   }
 );
-
+/* MODIFICATION : Fonction de communication de la hauteur */
+        function sendHeightToParent() {
+            setTimeout(() => {
+                const container = document.getElementById('typeform-container');
+                if(container) {
+                    const height = container.offsetHeight;
+                    window.parent.postMessage({ type: 'resize', height: height + 20 }, '*');
+                }
+            }, 50);
+        }
+        window.addEventListener('load', sendHeightToParent);
+        mettreAJourBoutonsSuivant();
+  
 </script>
