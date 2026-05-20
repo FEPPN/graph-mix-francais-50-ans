@@ -299,19 +299,28 @@ const chart = new Chart(
 );
 
 function sendHeightToParent() {
+
   setTimeout(function() {
-    const height = document.body.scrollHeight;
+
+    const height = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.offsetHeight
+    );
 
     window.parent.postMessage({
       type: 'resize',
-      height: height + 20
+      height: height + 40
     }, '*');
-  }, 100);
+
+  }, 150);
 }
 
 window.addEventListener('load', sendHeightToParent);
 window.addEventListener('resize', sendHeightToParent);
 
-setTimeout(sendHeightToParent, 500);
-setTimeout(sendHeightToParent, 1000);
+setTimeout(sendHeightToParent, 300);
+setTimeout(sendHeightToParent, 800);
+setTimeout(sendHeightToParent, 1500);
 </script>
