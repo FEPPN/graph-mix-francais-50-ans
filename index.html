@@ -1,0 +1,333 @@
+<div class="ppn-chart-card">
+
+  <div class="ppn-chart-header">
+    <h3>Évolution du mix électrique français de 1975 à 2025</h3>
+    <p>Production annuelle par filière, en TWh</p>
+  </div>
+
+  <div class="ppn-chart-wrapper">
+    <canvas id="mix50ansFrance"></canvas>
+  </div>
+
+  <p class="ppn-chart-note">
+    Sources : RTE, ODRE, SDES.
+  </p>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+.ppn-chart-card {
+  max-width: 1100px;
+  margin: 40px auto;
+  background: #ffffff;
+  border: 1px solid #E6EAF5;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 35px rgba(33,36,48,0.08);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.ppn-chart-header {
+  background: #5A52FF;
+  padding: 32px 24px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.ppn-chart-header h3 {
+  margin: 0 0 10px;
+  font-size: 34px;
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.ppn-chart-header p {
+  margin: 0;
+  font-size: 18px;
+  opacity: 0.95;
+}
+
+.ppn-chart-wrapper {
+  position: relative;
+  width: 100%;
+  height: 650px;
+  padding: 30px 30px 10px;
+  box-sizing: border-box;
+  background: #ffffff;
+}
+
+.ppn-chart-note {
+  text-align: center;
+  padding: 0 24px 28px;
+  color: #6B7280;
+  font-size: 14px;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+
+  .ppn-chart-header {
+    padding: 24px 16px;
+  }
+
+  .ppn-chart-header h3 {
+    font-size: 24px;
+  }
+
+  .ppn-chart-header p {
+    font-size: 15px;
+  }
+
+  .ppn-chart-wrapper {
+    height: 500px;
+    padding: 20px 10px 0;
+  }
+
+}
+
+</style>
+
+<script>
+
+const labels = [
+  1975,1977,1979,1981,1983,
+  1985,1987,1989,1991,1993,
+  1995,1997,1999,2001,2003,
+  2005,2007,2009,2011,2013,
+  2015,2017,2019,2021,2022,
+  2023,2024,2025
+];
+
+const data = {
+
+  labels: labels,
+
+  datasets: [
+
+    {
+      label: 'Nucléaire',
+      data: [
+        15,35,75,120,180,
+        250,300,330,360,375,
+        377,395,395,416,403,
+        430,418,390,421,404,
+        416,379,379,361,279,
+        320,362,374
+      ],
+      borderColor: '#5A52FF',
+      backgroundColor: 'rgba(90,82,255,0.82)',
+      fill: true,
+      tension: 0.35,
+      stack: 'mix',
+      pointRadius: 0,
+      borderWidth: 2
+    },
+
+    {
+      label: 'Hydraulique',
+      data: [
+        55,58,60,62,63,
+        65,67,66,64,63,
+        64,67,72,77,61,
+        57,59,62,50,75,
+        59,53,61,62,49,
+        58,75,66
+      ],
+      borderColor: '#BFC8E2',
+      backgroundColor: 'rgba(191,200,226,0.9)',
+      fill: true,
+      tension: 0.35,
+      stack: 'mix',
+      pointRadius: 0,
+      borderWidth: 2
+    },
+
+    {
+      label: 'Thermique fossile',
+      data: [
+        120,118,110,100,92,
+        80,70,60,58,62,
+        68,60,56,53,54,
+        66,58,51,46,43,
+        42,42,33,31,45,
+        34,20,20
+      ],
+      borderColor: '#FF6C95',
+      backgroundColor: 'rgba(255,108,149,0.82)',
+      fill: true,
+      tension: 0.35,
+      stack: 'mix',
+      pointRadius: 0,
+      borderWidth: 2
+    },
+
+    {
+      label: 'Éolien',
+      data: [
+        0,0,0,0,0,
+        0,0,0,0,0,
+        0,0,0,0,1,
+        1,4,8,12,16,
+        21,24,34,37,38,
+        50,47,48
+      ],
+      borderColor: '#0FC4B2',
+      backgroundColor: 'rgba(15,196,178,0.82)',
+      fill: true,
+      tension: 0.35,
+      stack: 'mix',
+      pointRadius: 0,
+      borderWidth: 2
+    },
+
+    {
+      label: 'Solaire',
+      data: [
+        0,0,0,0,0,
+        0,0,0,0,0,
+        0,0,0,0,0,
+        0,0,0,2,5,
+        7,9,12,14,19,
+        21,25,31
+      ],
+      borderColor: '#FFB81D',
+      backgroundColor: 'rgba(255,184,29,0.85)',
+      fill: true,
+      tension: 0.35,
+      stack: 'mix',
+      pointRadius: 0,
+      borderWidth: 2
+    },
+
+    {
+      label: 'Bioénergies',
+      data: [
+        1,1,1,1,2,
+        2,2,2,2,2,
+        2,2,3,3,4,
+        4,5,6,7,8,
+        9,9,10,10,10,
+        10,11,11
+      ],
+      borderColor: '#212430',
+      backgroundColor: 'rgba(33,36,48,0.45)',
+      fill: true,
+      tension: 0.35,
+      stack: 'mix',
+      pointRadius: 0,
+      borderWidth: 2
+    }
+
+  ]
+};
+
+new Chart(
+  document.getElementById('mix50ansFrance'),
+  {
+    type: 'line',
+
+    data: data,
+
+    options: {
+
+      responsive: true,
+      maintainAspectRatio: false,
+
+      interaction: {
+        mode: 'index',
+        intersect: false
+      },
+
+      plugins: {
+
+        legend: {
+          position: 'bottom',
+
+          labels: {
+            color: '#212430',
+            padding: 20,
+            boxWidth: 14,
+            boxHeight: 14,
+            usePointStyle: true,
+            pointStyle: 'circle',
+
+            font: {
+              size: 13,
+              weight: '600'
+            }
+          }
+        },
+
+        tooltip: {
+
+          backgroundColor: '#212430',
+          titleColor: '#ffffff',
+          bodyColor: '#ffffff',
+          padding: 14,
+          cornerRadius: 12,
+
+          callbacks: {
+            label: function(context) {
+              return context.dataset.label + ' : ' + context.parsed.y + ' TWh';
+            }
+          }
+        }
+      },
+
+      scales: {
+
+        x: {
+
+          stacked: true,
+
+          ticks: {
+            color: '#212430',
+            maxTicksLimit: 12,
+
+            font: {
+              size: 12
+            }
+          },
+
+          grid: {
+            display: false
+          }
+        },
+
+        y: {
+
+          stacked: true,
+          beginAtZero: true,
+
+          title: {
+            display: true,
+            text: 'Production électrique (TWh)',
+            color: '#212430',
+
+            font: {
+              size: 14,
+              weight: '700'
+            }
+          },
+
+          ticks: {
+            color: '#212430',
+
+            callback: function(value) {
+              return value + ' TWh';
+            }
+          },
+
+          grid: {
+            color: 'rgba(191,200,226,0.35)'
+          }
+        }
+      }
+    }
+  }
+);
+
+</script>
